@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<example>
+  <person>
+    <name>Max Mustermann</name>
+    <age>35</age>
+    <address>
+      <street>Musterstraße 123</street>
+      <city>Musterstadt</city>
+      <country>Deutschland</country>
+    </address>
+  </person>
+  <person>
+    <name>Lisa Müller</name>
+    <age>28</age>
+    <address>
+      <street>Testweg 456</street>
+      <city>Teststadt</city>
+      <country>Österreich</country>
+    </address>
+  </person>
+</example>
