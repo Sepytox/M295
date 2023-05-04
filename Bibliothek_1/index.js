@@ -121,8 +121,12 @@ app.post('/lends', (req, res) => {
         "borrowed_at": new Date().toISOString().slice(0, 10),
         "returned_at": null
       };
+    if (isbn === undefined || user === undefined) {
+      res.sendStatus(422);
+    } else {
+      res.sendStatus(201);
+    }
     lend.push(newlend);
-    res.sendStatus(201);
     console.log(newlend);
 });
 
