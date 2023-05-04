@@ -70,6 +70,16 @@ app.delete('/books/:isbn', (req, res) => {
 });
 
 app.put('/books/:isbn', (req, res) => {
+    const isbn = req.params.isbn;
+    const newbook = 
+      {
+        "isbn": isbn,
+        "title": "Babus, der kleine Elefant",
+        "year": 420,
+        "author": "Antip K.your mom"
+      };
+    replace(newbook);
+    res.send(books);
 });
 
 app.listen(port, () => {
