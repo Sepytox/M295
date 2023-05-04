@@ -156,7 +156,6 @@ app.patch('/lends/:id', (req, res) => {
       };
     updatelend(newborrowed_at);
     res.sendStatus(200);
-    res.send(lend);
 });
 
 app.listen(port, () => {
