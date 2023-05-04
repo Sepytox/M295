@@ -3,6 +3,33 @@ import express from "express";
 const app = express();
 const port = 3000;
 const options = {method: 'GET'};
+let lend = [
+    {
+      "id": "1",
+      "customer_id": "2",
+      "isbn": "23423-4234234-234",
+      "user": "Bambus",
+      "borrowed_at": '2021-05-01',
+      "returned_at": '2021-05-10'
+    },
+    {
+      "id": "2",
+      "customer_id": "3",
+      "isbn": "236266-2664236-623",
+      "user": "Baum",
+      "borrowed_at": '2021-04-10',
+      "returned_at": '2021-04-20'
+    },
+    {
+      "id": "3",
+      "customer_id": "4",
+      "isbn": '5315215-5151-1525',
+      "user": 'Tisch',
+      "borrowed_at": '2018-05-01',
+      "returned_at": '2018-05-10'
+    },
+];
+
 let books = [
     {
       "isbn": "978-3-86680-192-9",
@@ -29,7 +56,6 @@ let books = [
       "author": "Hermann Hesse"
     }
   ];
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -79,7 +105,51 @@ app.put('/books/:isbn', (req, res) => {
         "author": "Antip K.your mom"
       };
     replace(newbook);
+    res.sendStatus(201);
     res.send(books);
+});
+
+app.post('/lends', (req, res) => {
+    const isbn = req.query.isbn;
+    const user = req.query.user;
+    const newlend =
+      {
+        "id": lend.length + 1,
+        "customer_id": 1,
+        "isbn": isbn,
+        "user": user,
+        "borrowed_at": new Date().toISOString().slice(0, 10),
+        "returned_at": null
+      };
+    lend.push(newlend);
+    res.sendStatus(201);
+    console.log(newlend);
+});
+
+app.get('/lends', (req, res) => {
+    res.send(lend);
+});
+
+app.get('/lends/:id', (req, res) => {
+    const id = req.params.id;
+    const lends = lend.find((b) => b.id === id);
+    if (lends) {
+        res.send(lends);
+    } else {
+        res.sendStatus(404);
+    }
+});
+
+app.patch('/lends/:id', (req, res) => {
+    const id = req.params.id;
+    const borrowed_at = req.params.borrowed_at;
+    const newborrowed_at =
+      {
+        "borrowed_at": borrowed_at
+      };
+    lend = lend.map((b) => b.id === id ? newborrowed_at : b)
+    res.sendStatus(200);
+    res.send(lend);
 });
 
 app.listen(port, () => {
