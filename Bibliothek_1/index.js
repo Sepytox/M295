@@ -38,6 +38,14 @@ app.get('/books', (req, res) => {
     res.send(books);
 });
 
+function remove(isbn){
+    books = books.filter((b) => b.isbn !== isbn)
+};
+
+function replace(book) {
+  books = books.map((b) => b.isbn === book.isbn ? book : b)
+};
+
 app.get('/books/:isbn', (req, res) => {
     const isbn = req.params.isbn;
     const book = books.find((b) => b.isbn === isbn);
@@ -56,7 +64,12 @@ app.post('/books', (req, res) => {
 }); 
 
 app.delete('/books/:isbn', (req, res) => {
-    
+    const isbn = req.params.isbn;
+    remove(isbn);
+    res.sendStatus(204);
+});
+
+app.put('/books/:isbn', (req, res) => {
 });
 
 app.listen(port, () => {
