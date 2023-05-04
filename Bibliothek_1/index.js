@@ -140,14 +140,21 @@ app.get('/lends/:id', (req, res) => {
     }
 });
 
+function updatelend(ulend) {
+  lend = lend.map((b) => b.id === ulend.id ? ulend : b)
+}
+
 app.patch('/lends/:id', (req, res) => {
-    const id = req.params.id;
-    const borrowed_at = req.params.borrowed_at;
     const newborrowed_at =
       {
-        "borrowed_at": borrowed_at
+        "id": req.params.id,
+        "customer_id": req.query.customer_id,
+        "isbn": req.query.isbn,
+        "user": req.query.user,
+        "borrowed_at": new Date().toISOString().slice(0, 10),
+        "returned_at": null
       };
-    lend = lend.map((b) => b.id === id ? newborrowed_at : b)
+    updatelend(newborrowed_at);
     res.sendStatus(200);
     res.send(lend);
 });
